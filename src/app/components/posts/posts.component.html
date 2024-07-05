@@ -1,5 +1,35 @@
 <div>
-  <form [formGroup]="form" (ngSubmit)="onAdd()">
-    <input type="text" placeholder="Add..." formControlName="title" />
+  <form
+    [formGroup]="form"
+    (ngSubmit)="onAdd()"
+  >
+    <input
+      class="input"
+      type="text"
+      placeholder="Add a new post here ..."
+      formControlName="title"
+    />
   </form>
+
+  @if (store.loading()) {
+    <div>loading data - please wait for a minute ...</div>
+  }
+
+  @if (store.error()) {
+    <div>something happened with {{ store.error() }}</div>
+  }
+
+  <div class="total">total posts - {{ store.totalPostsCount() }}</div>
+
+  @for (post of store.posts(); track post.id) {
+    <div class="post">
+      {{ post.title }}
+      <span
+        class="delete"
+        (click)="removePost(post.id)"
+      ></span>
+    </div>
+  } @empty {
+    <div class="not-found">posts not found</div>
+  }
 </div>
