@@ -30,14 +30,12 @@ export const PostStore = signalStore(
         parseInt(crypto.randomUUID()),
         title
       );
-      const updatedPosts: IPost[] = [...store.posts(), newPost];
-      patchState(store, { posts: updatedPosts });
+      patchState(store, { posts: [...store.posts(), newPost] });
     },
     removePost(id: number): void {
-      const updatedPosts: IPost[] = store
-        .posts()
-        .filter((post: IPost) => post.id !== id);
-      patchState(store, { posts: updatedPosts });
+      patchState(store, {
+        posts: store.posts().filter((post: IPost) => post.id !== id),
+      });
     },
     loadPosts: rxMethod<void>(
       pipe(
