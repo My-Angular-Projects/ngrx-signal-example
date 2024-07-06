@@ -2,6 +2,7 @@ import {
   patchState,
   signalStore,
   withComputed,
+  withHooks,
   withMethods,
   withState,
 } from '@ngrx/signals';
@@ -47,5 +48,10 @@ export const PostStore = signalStore(
         )
       )
     ),
-  }))
+  })),
+  withHooks({
+    onInit(store) {
+      store.loadPosts();
+    },
+  })
 );
